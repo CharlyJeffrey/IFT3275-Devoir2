@@ -177,7 +177,7 @@ class RSA:
 
         n = q*p
         phi_n = (q-1)*(p-1)
-        d = RSA.SnM(e, phi_n-1, n)
+        d = RSA.EEA(e, phi_n)[0]
         
         PK = [n, e]
         SK = [p, q, d]
@@ -203,7 +203,6 @@ class RSA:
         msg = bin(((q*k_p)*y_p + (p*k_q)*y_q)%N)[2:].zfill(n)
         msg_int = ((q*k_p)*y_p + (p*k_q)*y_q)%N
         
-        #print("MSG int :",msg_int,"len MSG :",len(msg))
         
         return msg #un bitstring
     
@@ -221,12 +220,10 @@ class RSA:
         for i in range(len(msg)//n) :
             
             block = msg[i*n :(i+1)*n]
-            #print("block :",block,"  ",len(block))
-            cipher+=(bin(RSA.SnM(block, PK[1], PK[0]))[2:].zfill(n))
-            
-            #print("cipher block :",cipher,"  ",len(bin(RSA.SnM(block, PK[1], PK[0]))[2:].zfill(n)))
-        
-        reminder = len(msg)%n #je sais pas trop quoi faire pour reminder très près de n... il faut un certain lousse pour padder non? ou on fait juste changer la longeur de output du hash... en réalité ils utilise sha-x avec un output fixe...
+            cipher+=(bin(RSA.SnM(block, PK[1], PK[0]))[2:].zfill(n+1))
+                    
+        reminder = len(msg)%n
+        ##if reminder > n-
         
         return cipher #un bitsrting
     
@@ -260,39 +257,22 @@ class RSA:
 
 
 
-"""
-msg = bin(rd.randrange(0, pow(2, 520))+ pow(2, 520))[2:] 
-print(len(msg))
-
-A_PK, A_SK = RSA.genKeys(512)
-print(len(bin(A_PK[0])[2:]))
-Cipher = RSA.encrypt(msg, A_PK)
-#print(len(Cipher))
-
-MSG = RSA.decrypt(Cipher, A_SK)
-#print("MSG :",MSG) #msg n,a pas la bonne taille pour être decrypt sans OAEP.. TBC
-
-#print(msg)
-print("msg :",msg[:10])
-print("MSG :",MSG[:10])
-
-#print(''.join(str(int(a) ^ int(b)) for a,b in zip(msg[:(len(msg)-len(MSG))], MSG)))
-
- """       
-
-PK = [91, 5]
-SK = [7, 13, 29]
+PK, SK = RSA.genKeys(512)
 
 n = len(bin(PK[0])[2:])
 print("n :", n)
-M = bin(10)[2:].zfill(n-1)
-print("M :",M)
+
+m = rd.randrange(0, pow(2, 2*n-2))
+M = bin(m)[2:].zfill(2*n-2)
+
 
 C = RSA.encrypt(M, PK)
+D = RSA.decrypt(C, SK)
 
+#print("M :",M, "")
+#print("D :", D)
 
-#print("cipher :", C)
-#print("R_cipher :", bin(pow(10,5,91))[2:].zfill(n-1))
-print("CRT :",RSA.exp_CRT(C, SK))
-print("Decrypt :", RSA.decrypt(C, SK))
+XOR = ''.join(str(int(a) ^ int(b)) for a,b in zip(M, D))
+
+print("ZERO IS SUCESS : ",int(XOR))
 
