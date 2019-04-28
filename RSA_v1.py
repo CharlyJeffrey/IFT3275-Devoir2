@@ -237,7 +237,6 @@ class RSA:
         #print(nblocks)
         for i in range(nblocks) :
             block = C[i*n :(i+1)*n]
-            #print("block :",block)
             msg+=(RSA.exp_CRT(block, SK))
             #print(msg)
        

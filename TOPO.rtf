@@ -5,16 +5,18 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 Ma version na pas de bloc comments pour linstant mais voici ce que jai rajoute.\\\
-Soit : genKeys(), exp_CRT(), premiere ebauche de encrypt() et decrypt() \\\
+\f0\fs24 \cf0 Ma version na pas de bloc comments. Il doit y avoir des cadavres de print() coment\'e9\'85 S\'e9rieux, c\'92est le debug le plus chiant que j\'92ai fait \'e0 date!!  encrypt(), decrypt() roulent (j\'92ai fais plusieurs test)\
+\
 \
 TOPO :\
 \
-	- il me reste a ecrire Square and multiply (SnM dans le code, refere a pow() pour le moment)\\\
-	- integrer OAEP dans encrypt() et decrypt() : mon issue cest pour quand msg%n > n-k0 :\\\
-	on fait deux bloc? Il faut avoir un k0 usuel pour le decrypt (ou envoyer en clair k0, mais  on 	donne de linfo sur la longueur du message)\\\
-	- parfois n est un bit de moins que demande (juste pour me rappeler)\\\
-	- Sign(), checkSign() \\\
+	- il me reste (encore) a \'e9crire Square and multiply (je suis pas vrm avanc\'e9e, tu peux te pencher 	dessus si tu veux)\
+	- k0 est d\'e9fini \'e0 l\'92ext\'e9rieur de tout, je rusais avec les self.\
+	- j\'92ai du changer le block initial, il peut \'eatre repimp, il doit juste pas avoir d\'92info passer n-k0\'85\
+	(ajouter un timestamp serait bien\'85 ou voir signature dans .py)\
 	- pt utiliser une fonction random qui est crypto.safe \\\
 	- partie theorique\\\
-	- terminer le notebook}
+	- terminer le notebook\
+	- Un Mac pour aller avec?\
+\
+ps: c\'92est RSA_v2}
