@@ -275,3 +275,5 @@ XOR = ''.join(str(int(a) ^ int(b)) for a,b in zip(M, D))
 
 print("ZERO IS SUCESS : ",int(XOR))
 
+P = RSA
+

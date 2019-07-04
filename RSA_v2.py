@@ -385,7 +385,7 @@ SIGNATURE : encrypt(sign(hash(C),timestamp) ; C) avec sign qui est juste exp_CRT
 et (on pourait la mettre dans le bloc initial) et alors il faut juste aller la chercher, 
 et la vérifier à la fin de decrypt()
 """
-
+"""
 
 k0 = 128 #l'ai défini à l'exterieur
 
@@ -406,9 +406,18 @@ XOR = ''.join(str(int(a) ^ int(b)) for a,b in zip(M, D))
 print("ZERO IS SUCESS : ",int(XOR))
 
 """
+"""
 M= '100001111011010100111'
 S = RSA.sign(M,SK)
 V = RSA.verify_sign(M , S , PK )
 
 print(V)
 """
+PK, SK = RSA.genKeys(1024)
+N = PK[0]
+print(N)
+d=5
+m = floor(pow(N, 1/d))
+print("N :",N, "; n :", len(bin(N)[2:]), "; d =", d, "; m :",m , "m^d :", pow(m,d), "m^d+1 :")
+print(pow(m, d+1))
+
